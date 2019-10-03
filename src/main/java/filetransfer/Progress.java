@@ -37,10 +37,16 @@ public class Progress {
     }
 
     public void clearFilesProgress() {
+        ArrayList<Map.Entry<String, Double>> filesToRemove = new ArrayList<Map.Entry<String, Double>>();
+        
         for (Map.Entry<String, Double> entry : fileProgress.entrySet()) {
             if (entry.getValue() > 0.98  && entry.getValue() <= 1) {
-                fileProgress.remove(entry.getKey());
+                filesToRemove.add(entry);
             }
+        }
+        
+        for (Map.Entry<String, Double> fileToRemove : filesToRemove) {
+            fileProgress.remove(fileToRemove.getKey());
         }
     }
 }

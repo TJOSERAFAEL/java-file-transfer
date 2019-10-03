@@ -11,9 +11,21 @@ public class App {
     private static Progress fileProgress = new Progress();
 
     public static void main(String[] args) {
+        renderHeader();
         runServer();
         runRenderProgress();
         runClient();
+    }
+
+    private static void renderHeader() {
+        System.out.println("___________.__.__           ___________                              _____ ");            
+        System.out.println("\\_   _____/|__|  |   ____   \\__    ___/___________    ____   _______/ ____\\___________");
+        System.out.println(" |    __)  |  |  | _/ __ \\    |    |  \\_  __ \\__  \\  /    \\ /  ___/\\   __\\/ __ \\_  __ \\");
+        System.out.println(" |     \\   |  |  |_\\  ___/    |    |   |  | \\// __ \\|   |  \\___ \\  |  | \\  ___/|  | \\/");
+        System.out.println(" \\___  /   |__|____/\\___  >   |____|   |__|  (____  /___|  /____ > |__|  \\___  >__|");   
+        System.out.println("     \\/                 \\/                        \\/     \\/     \\/            \\/       ");
+        System.out.println("");
+        System.out.println("Ready for receiving files!");
     }
 
     private static void runServer() {

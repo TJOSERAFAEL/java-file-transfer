@@ -58,17 +58,4 @@ public class FileHandlerTest {
 
         assertTrue(true);
     }
-
-    @Test
-    public void _5_shouldGetFileContent() {
-        byte[] buffer = new byte[8192];
-        Integer bytesReaded = fileHandler.getNextChunck(buffer);
-        assertNotEquals(Integer.valueOf(0), bytesReaded);
-
-        do {
-            bytesReaded = fileHandler.getNextChunck(buffer);
-        } while (bytesReaded > 0);
-
-        assertTrue(true);
-    }
 }
