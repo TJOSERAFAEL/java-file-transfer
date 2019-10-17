@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -18,7 +19,7 @@ import org.junit.Test;
 public class FileHandlerTest {
     private static String testFilePath;
     private static FileHandler fileHandler;
-    
+
     @BeforeClass
     public static void runBeforeClass() {
         fileHandler = new FileHandler();
@@ -57,5 +58,15 @@ public class FileHandlerTest {
         } while (bytesReaded > 0);
 
         assertTrue(true);
+    }
+
+    @Test
+    public void _5_itShouldCloseFile() {
+        try {
+            fileHandler.closeFile();
+            assertTrue(true);
+        } catch (IOException e) {
+            assertTrue(false);
+        }
     }
 }

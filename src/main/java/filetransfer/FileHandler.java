@@ -56,12 +56,12 @@ public class FileHandler {
         return true;
     }
 
-    public void closeFile() {
+    public void closeFile() throws IOException {
         if (bufferedOutputStream != null) {
             try {
                 bufferedOutputStream.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw e;
             }
         }
     }
