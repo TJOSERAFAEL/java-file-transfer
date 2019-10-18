@@ -9,6 +9,7 @@ public class Server extends Thread {
     private static ServerSocket serverSocket;
     private static FileHandler fileHandler;
     private static Progress fileProgress;
+    private static String storagePath;
 
     public Server(FileHandler fH, Progress progress) {
         port = 9901;
@@ -39,7 +40,9 @@ public class Server extends Thread {
         while (true) {
             try {
                socket = serverSocket.accept();
-               new ServerThread(socket, fileHandler, fileProgress).start();
+               ServerThread serverThread = new ServerThread(socket, fileHandler, fileProgress);
+               serverThread.setStoragePath(storagePath);
+               serverThread.start();
             } catch (Exception e) {
                 return;
             }
@@ -53,5 +56,13 @@ public class Server extends Thread {
             e.printStackTrace();
         }
         handleConnection();
+    }
+
+    public void setStoragePath(String path) {
+        storagePath = path;
+    }
+
+    public String getStoragePath() {
+        return storagePath;
     }
 }

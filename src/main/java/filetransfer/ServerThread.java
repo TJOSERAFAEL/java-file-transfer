@@ -11,6 +11,7 @@ public class ServerThread extends Thread {
     private Long totalBytesReceived;
     private byte[] buffer = new byte[8192];
     private Progress fileProgress;
+    private String storagePath;
 
     public ServerThread(Socket socket, FileHandler fileHandler, Progress progress) {
         this.fileSize = (long) 0;
@@ -30,7 +31,7 @@ public class ServerThread extends Thread {
 
         fileSize = receiveFileSize();
         String fileName = receiveFileName();
-        fileHandler.createFile("C:\\FH_" + fileName);
+        fileHandler.createFile(storagePath + fileName);
 
         Integer progressDelay = 0;
         while (true) {
@@ -111,5 +112,13 @@ public class ServerThread extends Thread {
         } catch (IOException e) {
             return -1;
         }
+    }
+
+    public void setStoragePath(String path) {
+        this.storagePath = path;
+    }
+
+    public String getStoragePath() {
+        return this.storagePath;
     }
 }

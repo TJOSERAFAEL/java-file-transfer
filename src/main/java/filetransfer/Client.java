@@ -2,6 +2,7 @@ package filetransfer;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -10,6 +11,7 @@ public class Client {
     private byte[] buffer = new byte[8192];
     private Socket socket;
     private FileHandler fileHandler;
+    private int timeout;
 
     public Client(FileHandler fH) {
         port = 9901;
@@ -25,15 +27,15 @@ public class Client {
         return port;
     }
 
-    public boolean connect(String hostname, Integer port) {
+    public void connect(String hostname, Integer port) throws Exception {
         try {
-            socket = new Socket(hostname, port);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(hostname,port), this.timeout);
         } catch (UnknownHostException unknownHostException ) {
-            return false;
+            throw unknownHostException;
         } catch (IOException ioException ) {
-            return false;
+            throw ioException;
         }
-        return true;
     }
 
     public void sendFile(String path) {
@@ -77,5 +79,13 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public int getTimeout() {
+        return this.timeout;
     }
 }
