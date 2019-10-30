@@ -45,8 +45,10 @@ public class App {
 
         Integer serverPort = Integer.parseInt(configuration.getServer().get("port"));
         String storagePath = configuration.getServer().get("storage-path");
+        int bufferSize = Integer.parseInt(configuration.getNetwork().get("buffer-size"));
 
         server.setPort(serverPort);
+        server.setBufferSize(bufferSize);
         server.setStoragePath(storagePath);
         server.start();
     }
@@ -59,7 +61,9 @@ public class App {
         Integer port = 991;
 
         int clientTimeout = Integer.parseInt(configuration.getClient().get("timeout"));
+        int bufferSize = Integer.parseInt(configuration.getNetwork().get("buffer-size"));
         client.setTimeout(clientTimeout);
+        client.setBufferSize(bufferSize);
 
         System.out.println("Please enter hostname or IP: ");
         in = new Scanner(System.in);

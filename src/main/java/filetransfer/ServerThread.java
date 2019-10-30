@@ -121,4 +121,8 @@ public class ServerThread extends Thread {
     public String getStoragePath() {
         return this.storagePath;
     }
+
+    public void setBufferSize(int size) {
+        this.buffer = new byte[size];
+    }
 }

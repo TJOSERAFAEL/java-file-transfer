@@ -10,6 +10,7 @@ public class Server extends Thread {
     private static FileHandler fileHandler;
     private static Progress fileProgress;
     private static String storagePath;
+    private static int bufferSize;
 
     public Server(FileHandler fH, Progress progress) {
         port = 9901;
@@ -42,6 +43,7 @@ public class Server extends Thread {
                socket = serverSocket.accept();
                ServerThread serverThread = new ServerThread(socket, fileHandler, fileProgress);
                serverThread.setStoragePath(storagePath);
+               serverThread.setBufferSize(bufferSize);
                serverThread.start();
             } catch (Exception e) {
                 return;
@@ -65,4 +67,8 @@ public class Server extends Thread {
     public String getStoragePath() {
         return storagePath;
     }
+
+    public void setBufferSize(int size) {
+        bufferSize = size;
+    } 
 }

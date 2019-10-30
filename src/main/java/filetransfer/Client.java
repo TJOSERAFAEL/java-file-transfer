@@ -27,6 +27,10 @@ public class Client {
         return port;
     }
 
+    public void setBufferSize(int size) {
+        buffer = new byte[size];
+    }  
+
     public void connect(String hostname, Integer port) throws Exception {
         try {
             socket = new Socket();

@@ -1,7 +1,7 @@
 network: 
-  buffer-size: 8120
+  buffer-size: 16384
 server: 
-  port: 991
+  port: 9991
   storage-path: "C:\\descargatest\\"
 client:
   timeout: 2000
