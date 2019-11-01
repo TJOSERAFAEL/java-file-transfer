@@ -1,4 +1,4 @@
-# java-file-transfer
+# FileTransfer
 
 Multi client file transfer system written in Java. Compatible with Linux, Windows and MacOS.
 
