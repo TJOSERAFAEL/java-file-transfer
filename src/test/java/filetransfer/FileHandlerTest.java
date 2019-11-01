@@ -49,6 +49,7 @@ public class FileHandlerTest {
 
     @Test
     public void _4_shouldGetFileContent() {
+        fileHandler.readFile(testFilePath);
         byte[] buffer = new byte[8192];
         Integer bytesReaded = fileHandler.getNextChunck(buffer);
         assertNotEquals(Integer.valueOf(0), bytesReaded);
