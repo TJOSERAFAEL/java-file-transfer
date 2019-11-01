@@ -23,6 +23,7 @@ public class FileHandlerTest {
     @BeforeClass
     public static void runBeforeClass() {
         fileHandler = new FileHandler();
+        a
         testFilePath = FileHandlerTest.class.getResource("../resources/file.txt").getPath();
     }
 
