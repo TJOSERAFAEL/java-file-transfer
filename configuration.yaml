@@ -1,7 +1,0 @@
-network: 
-  buffer-size: 16384
-server: 
-  port: 9991
-  storage-path: "C:\\file-transfer\\"
-client:
-  timeout: 2000
