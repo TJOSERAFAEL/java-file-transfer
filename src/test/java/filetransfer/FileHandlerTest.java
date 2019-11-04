@@ -1,5 +1,6 @@
 package filetransfer;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -69,5 +70,29 @@ public class FileHandlerTest {
         } catch (IOException e) {
             assertTrue(false);
         }
+    }
+
+    @Test
+    public void _6_itShouldRemoveSinglePathQuotes() {
+        String testPathSingleQuotes = "'/test/path'";
+        String testPathClean =  "/test/path";
+        String testPath = fileHandler.removeSurroundingPathQuotes(testPathSingleQuotes);
+        assertEquals(testPathClean, testPath);
+    }
+
+    @Test
+    public void _7_itShouldRemoveDoublePathQuotes() {
+        String testPathDoubleQuotes = "\"/test/path\"";
+        String testPathClean =  "/test/path";
+        String testPath = fileHandler.removeSurroundingPathQuotes(testPathDoubleQuotes);
+        assertEquals(testPathClean, testPath);
+    }
+
+    @Test
+    public void _8_itShouldNotRemovePathQuotes() {
+        String testPathNoQuotes = "/test/path";
+        String testPathClean =  "/test/path";
+        String testPath = fileHandler.removeSurroundingPathQuotes(testPathNoQuotes);
+        assertEquals(testPathClean, testPath);
     }
 }

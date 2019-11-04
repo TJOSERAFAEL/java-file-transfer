@@ -83,4 +83,11 @@ public class FileHandler {
     public long getFileSizeInBytes(String path) {
         return new File(path).length();
     }
+
+    public String removeSurroundingPathQuotes(String path) {
+        String clearedPath = path;
+        clearedPath = clearedPath.replace("\"", "");
+        clearedPath = clearedPath.replace("'", "");
+        return clearedPath;
+    }
 }

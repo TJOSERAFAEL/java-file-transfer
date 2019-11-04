@@ -58,7 +58,7 @@ public class App {
         Client client = new Client(fileHandler);
 
         String hostname = "localhost";
-        Integer port = 991;
+        Integer port = 9991;
 
         int clientTimeout = Integer.parseInt(configuration.getClient().get("timeout"));
         int bufferSize = Integer.parseInt(configuration.getNetwork().get("buffer-size"));
@@ -84,6 +84,7 @@ public class App {
             try {
                 System.out.print("Enter file path to send: ");
                 String path = in.next();
+                path = fileHandler.removeSurroundingPathQuotes(path);
 
                 if (!fileHandler.readFile(path)) {
                     System.out.println("File '" + path + "' not found'");
