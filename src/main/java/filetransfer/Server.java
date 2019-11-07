@@ -35,6 +35,12 @@ public class Server extends Thread {
         }
     }
 
+    public void stopServer() throws IOException {
+        if (serverSocket != null && !serverSocket.isClosed()) {
+            serverSocket.close();
+        }
+    }
+
     public void handleConnection() {
         Socket socket;
 
@@ -70,5 +76,9 @@ public class Server extends Thread {
 
     public void setBufferSize(int size) {
         bufferSize = size;
-    } 
+    }
+
+    public int getBufferSize() {
+        return bufferSize;
+    }
 }
