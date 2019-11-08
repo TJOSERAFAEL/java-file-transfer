@@ -39,15 +39,8 @@ public class ServerThread extends Thread {
             try {
                 Integer bytesReaded = dataInputStream.read(buffer);
                 totalBytesReceived += bytesReaded;
-
-                if (bytesReaded > 0) {
-                    writeBytesToFile(buffer, bytesReaded);
-                    if (progressDelay > 20) {
-                        fileProgress.addFileProgress(fileName, (double) totalBytesReceived / fileSize);
-                        progressDelay = 0;
-                    }
-                    progressDelay++;
-                }
+                updateFileContent(buffer, bytesReaded);
+                progressDelay += updateFileProgress(bytesReaded, progressDelay, fileName);
 
                 if (totalBytesReceived >= fileSize) {
                     fileProgress.removeFileProgress(fileName);
@@ -72,6 +65,23 @@ public class ServerThread extends Thread {
 
     private void writeBytesToFile(byte[] buffer, Integer len) throws IOException {
         fileHandler.writeOutputStreamNbytes(buffer, len);
+    }
+
+    private void updateFileContent(byte[] buffer, Integer bytesReaded) throws IOException {
+        if (bytesReaded > 0) {
+            writeBytesToFile(buffer, bytesReaded);
+        }
+    }
+
+    private Integer updateFileProgress(Integer bytesReaded, Integer progressDelay, String fileName) {
+        if (bytesReaded > 0) {
+            if (progressDelay >= 20) {
+                fileProgress.addFileProgress(fileName, (double) totalBytesReceived / fileSize);
+                return -20;
+            }
+            return 1;
+        }
+        return 0;
     }
 
     private String receiveFileName() {
