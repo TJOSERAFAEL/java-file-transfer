@@ -34,7 +34,7 @@ public class Client {
     public void connect(String hostname, Integer port) throws Exception {
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress(hostname,port), this.timeout);
+            socket.connect(new InetSocketAddress(hostname, port), this.timeout);
         } catch (UnknownHostException unknownHostException ) {
             throw unknownHostException;
         } catch (IOException ioException ) {
@@ -47,13 +47,17 @@ public class Client {
             try {
                 DataOutputStream output = new DataOutputStream(socket.getOutputStream());
                 Integer bytesReaded = fileHandler.getNextChunck(buffer);
+
+                if (bytesReaded == -1) {
+                    socket.close();
+                    return;
+                }
                 
                 do {
                     output.write(buffer, 0, bytesReaded);
                     output.flush();
                     bytesReaded = fileHandler.getNextChunck(buffer);
-                } 
-                while (bytesReaded > 0);
+                } while (bytesReaded > 0);
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();

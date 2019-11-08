@@ -3,6 +3,7 @@ package filetransfer;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.Instant;
 
 public class ServerThread extends Thread {
     private Socket socket;
@@ -28,10 +29,10 @@ public class ServerThread extends Thread {
         } catch (IOException ex) {
             return;
         }
-
         fileSize = receiveFileSize();
+        long now = Instant.now().toEpochMilli();
         String fileName = receiveFileName();
-        fileHandler.createFile(storagePath + fileName);
+        fileHandler.createFile(storagePath + now + "_" + fileName);
 
         Integer progressDelay = 0;
         while (true) {
@@ -57,7 +58,7 @@ public class ServerThread extends Thread {
                         e.printStackTrace();
                     }
                     
-                    System.out.println("File '" + fileName + "' received on drive C: !");
+                    System.out.println("File '" + fileName + "' received on: " + storagePath);
                     fileHandler.closeFile();
                     socket.close();
                     return;

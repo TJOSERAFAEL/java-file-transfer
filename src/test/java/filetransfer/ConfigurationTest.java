@@ -42,7 +42,7 @@ public class ConfigurationTest {
                 int timeout = Integer.parseInt(configuration.get().getClient().get("timeout"));
 
                 assertEquals(9991, serverPort.intValue());
-                assertEquals("C:\\file-transfer\\", storagePath);
+                assertEquals("../", storagePath);
                 assertEquals(16384, bufferSize);
                 assertEquals(2000, timeout);
             }
