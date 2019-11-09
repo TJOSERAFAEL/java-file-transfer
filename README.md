@@ -31,5 +31,8 @@ client:
 
 Make sure to adjust `storage-path` to a directory where you want to store the received files.
 
+## License 
+
+License GPLv2
 
 
