@@ -6,9 +6,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.junit.Test;
@@ -18,22 +15,13 @@ import org.junit.Test;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConfigurationTest {
-    
-    private Optional<Configuration> readYamlConfiguration(String path) throws Exception {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        try {
-            Configuration configuration = mapper.readValue(new File(path), Configuration.class);
-            return Optional.of(configuration);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
 
     @Test
     public void _1_shouldReadDefaultConfiguration() {
         try {
             String configurationPath = ConfigurationTest.class.getResource("../configuration.yaml").getPath();
-            Optional<Configuration> configuration = readYamlConfiguration(configurationPath);
+            ConfigurationReader configurationReader = new ConfigurationReader(configurationPath);
+            Optional<Configuration> configuration = configurationReader.readYamlConfiguration();
 
             if (configuration.isPresent()) {
                 Integer serverPort = Integer.parseInt(configuration.get().getServer().get("port"));

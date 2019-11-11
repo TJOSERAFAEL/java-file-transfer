@@ -1,22 +1,16 @@
 package filetransfer;
 
-import java.io.File;
 import java.util.Optional;
 import java.util.Scanner;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class App {
     private static Scanner in;
     private static Progress fileProgress = new Progress();
+    private static ConfigurationReader configurationReader = new ConfigurationReader("configuration.yaml");
 
     public static void main(String[] args) {
         try {
-            Optional<Configuration> configuration = readYamlConfiguration("configuration.yaml");
+            Optional<Configuration> configuration = configurationReader.readYamlConfiguration();
             if (configuration.isPresent()) {
                 renderHeader();
                 runServer(configuration.get());
@@ -101,16 +95,5 @@ public class App {
 
     private static void runRenderProgress() {
         new ProgressThread(fileProgress).start();
-    }
-
-    private static Optional<Configuration> readYamlConfiguration(String path) throws Exception {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        try {
-            Configuration configuration = mapper.readValue(new File(path), Configuration.class);
-            System.out.println(ReflectionToStringBuilder.toString(configuration,ToStringStyle.MULTI_LINE_STYLE));
-            return Optional.of(configuration);
-        } catch (Exception e) {
-            throw e;
-        }
     }
 }

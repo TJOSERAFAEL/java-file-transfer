@@ -1,15 +1,9 @@
 package filetransfer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -48,7 +42,8 @@ public class IntegrationTest {
     public void _1_shouldReadConfiguration() {
         try {
             String configurationPath = ConfigurationTest.class.getResource("../configuration.yaml").getPath();
-            configuration = readYamlConfiguration(configurationPath);
+            ConfigurationReader configurationReader = new ConfigurationReader(configurationPath);
+            configuration = configurationReader.readYamlConfiguration();
 
             if (configuration.isPresent()) {
                 port = Integer.parseInt(configuration.get().getServer().get("port"));
@@ -113,16 +108,6 @@ public class IntegrationTest {
             server.stopServer();
         } catch (IOException ioException) {
             assertTrue(false);
-        }
-    }
-
-    private Optional<Configuration> readYamlConfiguration(String path) throws Exception {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        try {
-            Configuration configuration = mapper.readValue(new File(path), Configuration.class);
-            return Optional.of(configuration);
-        } catch (Exception e) {
-            throw e;
         }
     }
 }
