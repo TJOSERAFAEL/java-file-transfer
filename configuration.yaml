@@ -3,5 +3,7 @@ network:
 server: 
   port: 9991
   storage-path: "C:\\file-transfer\\"
+  enabled: false
 client:
   timeout: 2000
+  enabled: true

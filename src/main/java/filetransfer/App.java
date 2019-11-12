@@ -30,12 +30,17 @@ public class App {
         System.out.println(" \\___  /   |__|____/\\___  >   |____|   |__|  (____  /___|  /____ > |__|  \\___  >__|");   
         System.out.println("     \\/                 \\/                        \\/     \\/     \\/            \\/       ");
         System.out.println("");
-        System.out.println("Ready for receiving files!");
     }
 
     private static void runServer(Configuration configuration) {
         FileHandler fileHandler = new FileHandler();
         Server server = new Server(fileHandler, fileProgress);
+
+        Boolean enabled = Boolean.parseBoolean(configuration.getServer().get("enabled"));
+
+        if (!enabled) {
+            return;
+        }
 
         Integer serverPort = Integer.parseInt(configuration.getServer().get("port"));
         String storagePath = configuration.getServer().get("storage-path");
@@ -51,9 +56,14 @@ public class App {
         FileHandler fileHandler = new FileHandler();
         Client client = new Client(fileHandler);
 
-        String hostname = "localhost";
-        Integer port = 9991;
+        Boolean enabled = Boolean.parseBoolean(configuration.getClient().get("enabled"));
 
+        if (!enabled) {
+            return;
+        }
+
+        String hostname = "localhost";
+        Integer port = Integer.parseInt(configuration.getServer().get("port")); 
         int clientTimeout = Integer.parseInt(configuration.getClient().get("timeout"));
         int bufferSize = Integer.parseInt(configuration.getNetwork().get("buffer-size"));
         client.setTimeout(clientTimeout);
