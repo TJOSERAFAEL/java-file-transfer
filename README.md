@@ -25,8 +25,10 @@ network:
 server: 
   port: 9991
   storage-path: "C:\\file-transfer\\"
+  enabled: true
 client:
   timeout: 2000
+  enabled: true
 ```
 
 Make sure to adjust `storage-path` to a directory where you want to store the received files.
