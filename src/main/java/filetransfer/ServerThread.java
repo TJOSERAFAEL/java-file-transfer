@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.time.Instant;
+import java.util.Optional;
 
 public class ServerThread extends Thread {
     private Socket socket;
@@ -23,12 +24,13 @@ public class ServerThread extends Thread {
     }
 
     public void run() {
-        DataInputStream dataInputStream;
-        try {
-            dataInputStream = new DataInputStream(socket.getInputStream());
-        } catch (IOException ex) {
+        Optional<DataInputStream> dataInputStream = getDataInputStreamFromSocket();
+        
+        if (!dataInputStream.isPresent()) {
+            System.out.println("Error creating dataInputStream from socket");
             return;
         }
+
         fileSize = receiveFileSize();
         long now = Instant.now().toEpochMilli();
         String fileName = receiveFileName();
@@ -37,7 +39,7 @@ public class ServerThread extends Thread {
         Integer progressDelay = 0;
         while (true) {
             try {
-                Integer bytesReaded = dataInputStream.read(buffer);
+                Integer bytesReaded = dataInputStream.get().read(buffer);
                 totalBytesReceived += bytesReaded;
                 updateFileContent(buffer, bytesReaded);
                 progressDelay += updateFileProgress(bytesReaded, progressDelay, fileName);
@@ -135,5 +137,15 @@ public class ServerThread extends Thread {
 
     public void setBufferSize(int size) {
         this.buffer = new byte[size];
+    }
+
+    private Optional<DataInputStream> getDataInputStreamFromSocket() {
+        DataInputStream dataInputStream;
+        try {
+            dataInputStream = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+           return Optional.empty();
+        }
+        return Optional.of(dataInputStream);
     }
 }
