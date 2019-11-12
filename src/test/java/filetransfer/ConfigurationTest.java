@@ -23,11 +23,15 @@ public class ConfigurationTest {
             Optional<Configuration> configuration = configurationReader.readYamlConfiguration();
 
             if (configuration.isPresent()) {
+                Boolean enabledServer = Boolean.parseBoolean(configuration.get().getServer().get("enabled"));
+                Boolean enabledClient = Boolean.parseBoolean(configuration.get().getClient().get("enabled"));
                 Integer serverPort = Integer.parseInt(configuration.get().getServer().get("port"));
                 String storagePath = configuration.get().getServer().get("storage-path");
                 int bufferSize = Integer.parseInt(configuration.get().getNetwork().get("buffer-size"));
                 int timeout = Integer.parseInt(configuration.get().getClient().get("timeout"));
 
+                assertEquals(true, enabledServer);
+                assertEquals(true, enabledClient);
                 assertEquals(9991, serverPort.intValue());
                 assertEquals("../", storagePath);
                 assertEquals(16384, bufferSize);

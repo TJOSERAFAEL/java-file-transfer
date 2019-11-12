@@ -3,5 +3,7 @@ network:
 server: 
   port: 9991
   storage-path: "../"
+  enabled: true
 client:
   timeout: 2000
+  enabled: true
