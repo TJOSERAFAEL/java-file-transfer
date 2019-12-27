@@ -45,15 +45,14 @@ public class FileHandler {
         return bytesRead;
     }
 
-    public boolean createFile(String path) {
+    public void createFile(String path) throws FileNotFoundException {
         FileOutputStream fileOutputStream;
         try {
             fileOutputStream = new FileOutputStream(path);
             bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
         } catch (FileNotFoundException e) {
-           return false;
+           throw e;
         }
-        return true;
     }
 
     public void closeFile() throws IOException {

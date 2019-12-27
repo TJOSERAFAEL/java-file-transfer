@@ -1,6 +1,7 @@
 package filetransfer;
 
 import java.io.DataInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
 import java.time.Instant;
@@ -34,7 +35,18 @@ public class ServerThread extends Thread {
         fileSize = receiveFileSize();
         long now = Instant.now().toEpochMilli();
         String fileName = receiveFileName();
-        fileHandler.createFile(storagePath + now + "_" + fileName);
+        
+        try {
+            fileHandler.createFile(storagePath + now + "_" + fileName);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            try {
+                socket.close();
+            } catch (IOException ex) {
+                System.out.println(e.getMessage());
+            }
+            return;
+        }
 
         Integer progressDelay = 0;
         while (true) {

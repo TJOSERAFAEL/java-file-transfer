@@ -95,4 +95,16 @@ public class FileHandlerTest {
         String testPath = fileHandler.removeSurroundingPathQuotes(testPathNoQuotes);
         assertEquals(testPathClean, testPath);
     }
+
+    @Test
+    public void _9_itShouldNotCreateFileWithWrongFileName() {
+        String fileName = "/test/wrong**.file";
+        try {
+            fileHandler.createFile(fileName);
+        } catch (FileNotFoundException e) {
+            assertTrue(true);
+            return;
+        }
+        assertTrue(false); 
+    }
 }
